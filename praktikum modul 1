@@ -1,0 +1,317 @@
+modul 1 no1
+//untuk menghidupkan salah satu led (untuk code ini, led yang tersambung di pin 11
+int LED = 11;  //untuk memilih pin yang ingin diaktifkan
+void setup()
+{
+  pinMode(LED, OUTPUT);
+}
+void loop()
+{
+  digitalWrite(LED, HIGH);
+  delay(1000); // Wait for 1000 millisecond(s)
+  digitalWrite(LED, LOW);
+  delay(1000); // Wait for 1000 millisecond(s)
+}
+
+
+modul 1 no2
+//Untuk menghidupkan led sekaligus 3
+int LED1 = 11;
+int LED2 = 10;
+int LED3 = 9;
+void setup()
+{
+  pinMode(LED1,OUTPUT);
+  pinMode(LED2, OUTPUT);
+  pinMode(LED3,OUTPUT);
+}
+void loop()
+{
+  digitalWrite(LED1, HIGH);
+  digitalWrite(LED2, HIGH); 
+  digitalWrite (LED3, HIGH);
+  delay(1000);
+  digitalWrite(LED1, LOW);
+  digitalWrite (LED2, LOW);
+  digitalWrite(LED3, LOW);
+  delay(1000);
+}
+
+
+
+modul 1 no3
+//Untuk menghidupkan led secara bergantian
+int LED1 = 11;
+int LED2 = 10;
+int LED3 = 9;
+void setup()
+{
+  pinMode(LED1,OUTPUT);
+  pinMode(LED2, OUTPUT);
+  pinMode(LED3,OUTPUT);
+}
+void loop()
+{
+  digitalWrite(LED1, HIGH);
+  delay(1000);
+  digitalWrite(LED2, HIGH);
+  delay(1500);
+  digitalWrite (LED3, HIGH);
+  delay(2000);
+  digitalWrite(LED1, LOW);
+  digitalWrite (LED2, LOW);
+  digitalWrite(LED3, LOW);
+  delay(1000);
+}
+
+
+modul 1 no4
+//Coding untuk fading (redup)
+//
+int LED1 = 11;
+int LED2 = 10;
+int LED3 = 9;
+int i;
+void setup()
+{
+  pinMode(LED1,OUTPUT);
+  pinMode(LED2, OUTPUT);
+  pinMode(LED3,OUTPUT);
+}
+
+void loop()
+{
+  for(i=255; i>=0; i-=5){
+    analogWrite(LED1,i);
+    analogWrite(LED2,i);
+    analogWrite(LED3,i);
+    delay(100);
+  }
+  
+}
+
+
+modul 1 no6
+// C++ code
+//
+int LED1 = 11;
+int LED2 = 10;
+int LED3 = 9;
+int i;
+void setup()
+{
+  pinMode(LED1,OUTPUT);
+  pinMode(LED2, OUTPUT);
+  pinMode(LED3,OUTPUT);
+}
+
+void loop()
+{
+  for(i=0; i<=255; i+=25){
+    analogWrite(LED1,i);
+    delay(300);
+    analogWrite(LED2,i);
+    delay(200);
+    analogWrite(LED3,i);
+    delay(100);
+  }
+  for(i=0; i<=255; i-=25){
+    analogWrite(LED1,i);
+    delay(300);
+    analogWrite(LED2,i);
+    delay(200);
+    analogWrite(LED3,i);
+    delay(100);
+  } 
+}
+
+
+modul 1 no7
+int led=11; 
+int pot=A0; 
+int data; 
+void setup(){ 
+pinMode(led,OUTPUT); 
+pinMode(pot,INPUT); 
+} 
+void loop(){ 
+data=analogRead(pot); 
+data=data/4; 
+analogWrite(led,data); 
+} 
+
+
+modul 1 no8
+int LED1 = 11;
+int LED2 = 10;
+int LED3 = 9;
+int pot=A0;
+int data;
+void setup()
+{
+  pinMode(LED1,OUTPUT);
+  pinMode(LED2, OUTPUT);
+  pinMode(LED3,OUTPUT);
+  pinMode(pot,INPUT);
+}
+
+void loop()
+{
+  data=analogRead(pot);
+  data=data/4;
+  analogWrite(LED1,data);
+  analogWrite(LED2,data);
+  analogWrite(LED3,data);
+}
+
+
+modul 1 no10
+int led=11; 
+int tombol=2; 
+void setup(){ 
+pinMode(led,OUTPUT); 
+pinMode(tombol,INPUT); 
+} 
+void loop(){ 
+ if(digitalRead(tombol)==LOW){ 
+digitalWrite(led,HIGH); 
+ } 
+else{ 
+ digitalWrite(led,LOW); 
+ } 
+} 
+
+
+modul 1 no11
+int led1=11;
+int led2=10;
+int led3=9; 
+int tombol=2; 
+
+void setup(){ 
+pinMode(led1,OUTPUT);
+pinMode(led2,OUTPUT);
+pinMode(led3,OUTPUT);
+pinMode(tombol,INPUT); 
+} 
+void loop(){ 
+ if(digitalRead(tombol)==LOW){ 
+    digitalWrite(led1,HIGH); 
+    digitalWrite(led2,HIGH); 
+    digitalWrite(led3,HIGH); 
+ } 
+else{ 
+    digitalWrite(led1,LOW); 
+    digitalWrite(led2,LOW); 
+    digitalWrite(led3,LOW); 
+ } 
+} 
+
+
+modul 1 no12
+int led1=9;
+int led2=10;
+int led3=11;
+int tombol = A0;
+int i;
+int nilai;
+int data;
+int pot = A1; 
+void setup(){
+pinMode(led1,OUTPUT);
+pinMode(led2,OUTPUT);
+pinMode(led3,OUTPUT);
+pinMode(tombol,INPUT);
+pinMode(tombol,INPUT);
+}
+ void loop(){
+  nilai = analogRead(pot);
+  if (digitalRead(tombol) == HIGH) {
+    for(i = 0; i <= 255; i+=25){
+      analogWrite(led1, i);
+      delay(500);
+    } 
+    for(i = 255; i >= 0; i-=25){
+      analogWrite(led1, i);
+      delay(500);
+    } 
+    delay(500);
+
+    for(i = 0; i <= 255; i+=25){
+      analogWrite(led2, i);
+      delay(500);
+    }
+     for(i = 255; i >= 0; i-=25){
+      analogWrite(led2, i);
+      delay(500);
+    } 
+    delay(500);
+
+     for(i = 0; i <= 255; i+=25){
+      analogWrite(led3, i);
+      delay(500);
+     }
+      for(i = 255; i >= 0; i-=25){
+      analogWrite(led3, i);
+      delay(500);
+    } 
+    delay(500);
+
+  } else {
+      digitalWrite(led1, LOW);
+      digitalWrite(led2, LOW);
+      digitalWrite(led3, LOW);
+    }
+  }
+
+
+modul 1 no13
+int led1=9;
+int led2=10;
+int led3=11;
+int tombol = A0;
+int i;
+int nilai;
+int data;
+int pot = A1; 
+void setup(){
+pinMode(led1,OUTPUT);
+pinMode(led2,OUTPUT);
+pinMode(led3,OUTPUT);
+pinMode(tombol,INPUT);
+pinMode(tombol,INPUT);
+}
+ void loop(){
+  
+  nilai = analogRead(pot);
+  if (digitalRead(tombol) == LOW) {
+    for(i = 0; i <= 255; i+=25){
+      analogWrite(led1, i);
+    } 
+    for(i = 255; i >= 0; i-=25){
+      analogWrite(led1, i);
+    } 
+    delay(analogRead(pot));
+
+    for(i = 0; i <= 255; i+=25){
+      analogWrite(led2, i);
+    }
+     for(i = 255; i >= 0; i-=25){
+      analogWrite(led2, i);
+
+    } 
+    delay(analogRead(pot));
+
+     for(i = 0; i <= 255; i+=25){
+      analogWrite(led3, i);
+     }
+      for(i = 255; i >= 0; i-=25){
+      analogWrite(led3, i);
+    } 
+    delay(analogRead(pot));
+
+  } else {
+      digitalWrite(led1, LOW);
+      digitalWrite(led2, LOW);
+      digitalWrite(led3, LOW);
+    }
