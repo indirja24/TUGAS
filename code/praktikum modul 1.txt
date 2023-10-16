@@ -13,7 +13,7 @@ void loop() {
 }
 
 
-//Buatlah program untuk menyalakan tiga tampu LEO secara bersama sama dengan durasi on selama 2 detik dan off selama I detik
+//Buatlah program untuk menyalakan tiga lampu LED secara bersamaan dengan durasi on selama 2 detik dan off selama 1 detik
 modul 1 no2
 //Untuk menghidupkan led sekaligus 3
 int LED1 = 11;  // Mendefinisikan variabel LED1 dengan pin 11 untuk mengaktifkan LED pertama
@@ -36,7 +36,7 @@ void loop() {
 }
 
 
-//Buatlah program untuk menyalakan ketiga lampu LED secara bergantian dengan durasi 500 milidetik menvala dan mati, (Running LED)
+//Buatlah program untuk menyalakan ketiga lampu LED secara bergantian dengan durasi 500 milidetik menyala dan mati (Running LED)
 modul 1 no3
 //Untuk menghidupkan led secara bergantian
 int LED1 = 11;  // Mendefinisikan variabel LED1 dengan pin 11 untuk mengaktifkan LED pertama
@@ -61,7 +61,7 @@ void loop() {
 }
 
 
-//Buatiah program untuk membuat fadding LED
+//Buatlah program untuk membuat fadding LED
 modul 1 no4
 //Coding untuk fading (redup)
 int LED1 = 11;  // Mendefinisikan variabel LED1 dengan pin 11 untuk mengaktifkan LED pertama
@@ -83,8 +83,7 @@ void loop() {
 }
 
 
-5. Buatiah program untuk menvalakan tiga lampu LED secara bersama sama dengan durasi fadding on selama 2 detik dan off selama 1 detik.
-//Buntiah program untuk tiga lampu LED fadding menyala dan mati secara betantian dengan durasi 500mllidetik menyala dan mati
+//Buatlah program untuk tiga lampu LED fadding menyala dan mati secara bergantian dengan durasi 500mllidetik menyala dan mati
 modul 1 no6
 // C++ code
 int LED1 = 11;  // Mendefinisikan variabel LED1 dengan pin 11 untuk mengaktifkan LED pertama
@@ -116,7 +115,7 @@ void loop() {
 }
 
 
-//Buatiah program potensiometer pada pin analog dengan LED
+//Buatlah program potensiometer pada pin analog dengan LED
 modul 1 no7
 int led = 11;  // Mendefinisikan variabel 'led' untuk menentukan pin LED (pin 11)
 int pot = A0;  // Mendefinisikan variabel 'pot' untuk menentukan pin potensiometer (Analog 0)
@@ -132,7 +131,7 @@ void loop() {
 }
 
 
-//Buatish program untuk menyalakan tiga LED bersama sama dengan menggunakan potensiometer
+//Buatlah program untuk menyalakan tiga LED bersama sama dengan menggunakan potensiometer
 modul 1 no8
 int LED1 = 11;  // Mendefinisikan variabel LED1 dengan pin 11 untuk mengaktifkan LED pertama
 int LED2 = 10;  // Mendefinisikan variabel LED2 dengan pin 10 untuk mengaktifkan LED kedua
@@ -154,8 +153,7 @@ void loop() {
 }
 
 
-9. Buatiali program untuk fading menyala dan mati secara bergantian dengan durasi pengaturan milidetik menyala dan mati menggunakan potensiometer
-//Buatiah program input push button dengan LED
+//Buatlah program input push button dengan LED
 modul 1 no10
 int led = 11;       // Mendefinisikan variabel 'led' dengan pin 11 untuk mengendalikan LED
 int tombol = 2;     // Mendefinisikan variabel 'tombol' dengan pin 2 untuk membaca tombol
@@ -172,7 +170,7 @@ void loop() {
 }
 
 
-///Buatiah program untuk menyalakan tiga LED bersama sama mengrunakan push button
+//Buatlah program untuk menyalakan tiga LED bersama sama menggunakan push button
 modul 1 no11
 int led1 = 11;      // Mendefinisikan variabel 'led1' dengan pin 11 untuk mengendalikan LED pertama
 int led2 = 10;      // Mendefinisikan variabel 'led2' dengan pin 10 untuk mengendalikan LED kedua
@@ -197,7 +195,7 @@ void loop() {
 }
 
 
-//Buatiah program untuk tiga LED dapat fadding menvala: dan mati secara bergantian dengan durasi pegaturan milidetik menyala dan mati ketlka push buton ditekan
+//Buatlah program untuk tiga LED dapat fadding menyala dan mati secara bergantian dengan durasi pegaturan milidetik menyala dan mati ketlka push buton ditekan
 modul 1 no12
 int led1 = 9;    // Mendefinisikan variabel 'led1' dengan pin 9 untuk mengendalikan LED pertama
 int led2 = 10;   // Mendefinisikan variabel 'led2' dengan pin 10 untuk mengendalikan LED kedua
@@ -257,7 +255,7 @@ void loop() {
 }
 
 
-//Boatiah program aplikas dengan menggunakan 3 LED, 1 Potensiometer, 1 Push Button yang terdapat kendaliOn/Off, PWM, dan Delay
+//Buatlah program aplikasi dengan menggunakan 3 LED, 1 Potensiometer, 1 Push Button yang terdapat kendali On/Off, PWM, dan Delay
 modul 1 no13
 int led1 = 9;    // Mendefinisikan variabel 'led1' dengan pin 9 untuk mengendalikan LED pertama
 int led2 = 10;   // Mendefinisikan variabel 'led2' dengan pin 10 untuk mengendalikan LED kedua
