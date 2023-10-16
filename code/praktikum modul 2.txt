@@ -1,3 +1,6 @@
+1. Buatlah program untuk menampilkan kalimat "Hello World" di LCD
+//Buatlah program menggunakan 2 Push Button. Ketika tombol 1 ditekan tulisan akan muncul di baris pertama LCD. Ketika tombol 2 ditekan tulisan akan muncul di baris kedua LCD
+//Buatlah program dengan menggunakan fungsi lcd.clear; untuk menghapus sema tulisan yang ada di LCD. Tambahkan dalam program, sehingga jika tombol 3 ditekan tulisan akan hilang
 no.2,3
 #include <LiquidCrystal_I2C.h>
 LiquidCrystal_I2C lcd(0x27, 16, 2);  // set the LCD address to 0x3F for a 16
@@ -32,6 +35,8 @@ void loop() {
 }
 
 
+4. Buatlah program untuk membuat running text LCD
+//Buatlah program untuk membuat running text menggunakan Push Button. Jika tombol 1 ditekan arah text bergerak ke kanan, jika tombol 2 ditekan arah text ke kiri
 no.5
 #include <LiquidCrystal_I2C.h>
 LiquidCrystal_I2C lcd(0x27, 16, 2);  // set the LCD address to 0x3F for a 16
@@ -75,6 +80,9 @@ void loop() {
   delay(1000); 
 }
 
+
+6. Buatlah program Serial text dan LCD
+//Buatlah program ketika start program dengan memunculkan tulisan "Hello", kemudian input text dari serial akan menghapus tulisan sebelumnya dan memunculkan tulisan baru, tulisan tersebut akan bergerak (running text) jika tombol 1 ditekan
 no.7
 #include <LiquidCrystal_I2C.h>
 LiquidCrystal_I2C lcd(0x27, 16, 2);  // set the LCD address to 0x3F for a 16
@@ -109,6 +117,8 @@ lcd.write(Serial.read());
   }
 }
 
+
+//Buatlah program untuk membuat menu sederhana pada LCD
 no 10. 
 #include <Wire.h>                 
 #include <LiquidCrystal_I2C.h> // menambahkan library LCD I2C   
