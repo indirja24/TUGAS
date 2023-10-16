@@ -1,3 +1,4 @@
+//Buatlah program dengan 2 push button dimana fungsi setiap push button berbeda. Push Button 1 ketika ditekan 1x akan menjalankan sensor LDR dan menampilkannya di serial monitor. Push button 2 ketika ditekan 1x akan menampilkan nilai photodioda pada serial monitor
 10.
 int buttonPin1 = 5;  // Pin untuk push button 1
 int buttonPin2 = 6;  // Pin untuk push button 2
@@ -26,6 +27,8 @@ void loop() {
   }
 }
 
+
+//Kasus 1: Push Button 1 ketika digunakan akan menunjukan nilai LDR dan ditunjukan dalam LED (secara PWM)
 12.
 const int buttonPin = 5; // Pin untuk push button
 const int ldrPin = A0;   // Pin untuk sensor LDR
@@ -57,6 +60,8 @@ void loop() {
   }
 }
 
+
+//Kasus 2: Push Button 2 digunakan untuk menunjukan nilai photodioda dan ditunjukan dalam LED (secara PWM)
 13.
 int buttonPin1 = 5; // Pin untuk push button 1 (LDR)
 int buttonPin2 = 6; // Pin untuk push button 2 (fotodioda)
@@ -103,6 +108,8 @@ void loop() {
   }
 }
 
+
+//Kasus 3 : Push Button 3 digunakan untuk menunjukan nilai photodioda yang dipantau dari serial monitor dan saat nilai melampaui batas akan membunyikan buzzer
 14.
 int buttonPin3 = 7;      // Pin untuk push button 3 (untuk memantau nilai fotodioda di Serial Monitor)
 int photodiodePin = A1;  // Pin untuk sensor fotodioda
@@ -139,6 +146,8 @@ void loop() {
   }
 }
 
+
+//Kasus 4: Push Button 4 digunakan untuk menunjukan nilai LDR yang dipantau dari serial monitor dan saat nilai melampaui batas akan membunyikan buzzer
 15.
 int buttonPin4 = 9;      // Pin untuk push button 3 (untuk memantau nilai fotodioda di Serial Monitor)
 int LDRPin = A0;  // Pin untuk sensor fotodioda
