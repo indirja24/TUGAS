@@ -1,0 +1,158 @@
+#include <LiquidCrystal_I2C.h>
+LiquidCrystal_I2C lcd(32,16,2);
+
+const int trigPin = A2;
+const int echoPin = A1;
+bool n = 0;
+int but1 = 11;
+int but2 = 10;
+int phdioda = A0;
+String obs = "X  O  O  X  X"; // 3 6 9 12 15
+String obs1 = "  X O X  O  O"; // 3 6 9 11 13
+int buz = 8;
+char player = '<';
+bool sate = false;
+char in;
+int score = 3;
+
+
+void setup()
+{
+  pinMode(but1, INPUT);
+  pinMode(but2, INPUT);
+  pinMode(buz, OUTPUT);
+  pinMode(phdioda, INPUT);
+  Serial.begin(9600);
+  lcd.begin(32,16,2);
+  lcd.init();	
+  lcd.backlight();
+  menu();
+}
+
+void loop()
+{
+  int durasi;
+  while (Serial.available() > 0){
+    char in = Serial.read();
+  	if (in == 'c' || in == 'C'){
+      	score = 3;
+    	sate = true;
+      	Serial.println("life score: ");
+        Serial.println(score);
+    }
+    if (in == 'b' || in == 'B'){
+      	score = 3;
+    	menu();
+      	Serial.println("life score: ");
+        Serial.println(score);
+    }
+  }
+  a:
+ if (sate == true){
+  for (int i = 0; i <= 15; i++){
+    durasi = analogRead(phdioda);
+    lcd.clear();
+    lcd.setCursor(0,1);
+    //lcd.print(score);
+  	lcd.setCursor(i,0);
+    lcd.print(obs);
+    lcd.setCursor(i,1);
+    lcd.print(obs1);
+    Serial.println("life score : ");
+    Serial.println(score);
+
+  	control();
+    lcd.setCursor(15,n);
+    lcd.print(player);    
+    delay(durasi);
+    
+	    if (n == 0 && (i == 3 || i == 6 || i == 15)){
+          digitalWrite(buz, HIGH);
+          delay(100);
+          digitalWrite(buz, LOW);
+          score--;
+        }
+    	if (n == 0 && (i == 9 || i == 12)){
+          	digitalWrite(buz, HIGH);
+          	delay(100);
+          	digitalWrite(buz, LOW);
+    		score++;
+    	}
+    	if (n == 1 && (i == 9 || i == 13)){
+          digitalWrite(buz, HIGH);
+          delay(100);
+          digitalWrite(buz, LOW);
+          score--;
+        }
+       	if (n == 1 && (i == 3 || i == 6 || i == 11)){
+          	digitalWrite(buz, HIGH);
+          	delay(100);
+          	digitalWrite(buz, LOW);
+    		score++;
+    	}
+   		if (score == 0){
+          lcd.clear();
+          lcd.setCursor(0,0);
+          lcd.print("GAME OVEERRR!!!");
+          lcd.setCursor(0,14);
+          lcd.print(score);
+          lcd.setCursor(0,1);
+          lcd.print("c: Ulang b: Kembali");
+          Serial.println("life score : ");
+          Serial.println(score);
+          sate = false;
+      	  goto a;
+         }
+        if (i == 15){
+          lcd.clear();
+          lcd.setCursor(0,0);
+          lcd.print("Total Skor:");
+          lcd.print(score);
+          lcd.setCursor(0,14);
+          lcd.print(score);
+          lcd.setCursor(0,1);
+          lcd.print("c: ulang b: kembali");
+          Serial.println("life score : ");
+          Serial.println(score);
+          sate = false;
+      	  goto a;
+        }
+
+        
+    
+  }
+}
+}
+
+void control(){
+  	int push = digitalRead(but1);
+    int push1 = digitalRead(but2);
+	if (push == LOW){
+    	n = 0;
+  	}
+  	if (push1 == LOW){
+    	n = 1;
+  	}    
+}
+
+void menu (){
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("Afif Syam");
+  lcd.setCursor(0,1);
+  lcd.print("6702223011");
+  lcd.setCursor(14,0);
+  //lcd.print(score);
+	Serial.println("life score: ");
+	Serial.println(score);
+}
+
+long microsecondsToInches(long microseconds)
+{
+ return microseconds / 74 / 2;
+}
+
+long microsecondsToCentimeters(long microseconds)
+{
+ return microseconds / 29 / 2;
+}
