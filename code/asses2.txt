@@ -156,3 +156,168 @@ long microsecondsToCentimeters(long microseconds)
 {
  return microseconds / 29 / 2;
 }
+
+
+#include <LiquidCrystal_I2C.h>
+LiquidCrystal_I2C lcd(32,16,2);
+
+const int trigPin = 11;
+const int echoPin = 10;
+bool n = 0;
+int but1 = 5;
+int but2 = 6;
+String ats = "   O  O  O X"; 
+String bwh = "  X O X  O  O"; 
+int buz = 2;
+char plane = '<';
+bool status = false;
+char in;
+int score = 3;
+
+
+void setup()
+{
+  
+ 
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  Serial.begin(9600);
+  lcd.begin(16,2);
+  pinMode(buz, OUTPUT);
+  lcd.init();	
+  pinMode(but1, INPUT);
+  pinMode(but2, INPUT);
+  lcd.backlight();
+  menu();
+}
+
+void loop()
+{
+  while (Serial.available() > 0){
+    char in = Serial.read();
+  	if (in == 'y' || in == 'Y'){
+      	score = 3;
+    	status = true;
+    }
+    if (in == 'b' || in == 'B'){
+      	score = 3;
+    	menu();
+    }
+  }
+  a:
+ if (status == true){
+  for (int i = 0; i <= 15; i++){
+	long duration, inches, cm;
+	digitalWrite(trigPin, LOW);
+	delayMicroseconds(2);
+	digitalWrite(trigPin, HIGH);
+	delayMicroseconds(10);
+	digitalWrite(trigPin, LOW);
+	duration = pulseIn(echoPin, HIGH);
+	inches = microsecondsToInches(duration);
+	cm = microsecondsToCentimeters(duration);
+	cm = map(cm, 10, 300, 100, 1000); 
+  Serial.print("Jarak : ");
+  Serial.println(cm);
+    lcd.clear();
+    lcd.setCursor(0,1);
+    lcd.print(score);
+    Serial.print(score);
+  	lcd.setCursor(i,0);
+    lcd.print(ats);
+    lcd.setCursor(i,1);
+    lcd.print(bwh);
+
+  	control();
+    lcd.setCursor(15,n);
+    lcd.print(plane);    
+    delay(cm);
+    
+	    if (n == 0 && (i == 3)){
+          digitalWrite(buz, HIGH);
+          delay(100);
+          
+          digitalWrite(buz, LOW);
+          score--;
+        }
+    	if (n == 0 && (i == 6 || i == 9 || i == 12 || i == 16)){
+          	digitalWrite(buz, HIGH);
+          	delay(100);
+          	digitalWrite(buz, LOW);
+    		score++;
+    	}
+    	if (n == 1 && (i == 9 || i == 13)){
+          digitalWrite(buz, HIGH);
+          delay(100);
+          digitalWrite(buz, LOW);
+          score--;
+        }
+       	if (n == 1 && (i == 3 || i == 6 || i == 11)){
+          	digitalWrite(buz, HIGH);
+          	delay(100);
+          	digitalWrite(buz, LOW);
+    		score++;
+    	}
+   		if (score == 0){
+          lcd.clear();
+          lcd.setCursor(0,0);
+          lcd.print("Kalah | Skor:");
+          lcd.setCursor(14,0);
+          lcd.print(score);
+          Serial.print(score);
+          lcd.setCursor(0,1);
+          lcd.print("y: mulai b: kembali");          
+          status = false;
+      	  goto a;
+         }
+        if (i == 15){
+          lcd.clear();
+          lcd.setCursor(0,0);
+          lcd.print("Kalah | Skor:");
+          lcd.setCursor(14,0);
+          lcd.print(score);
+          lcd.setCursor(0,1);
+          lcd.print("y: mulai b: kembali");          
+          status = false;
+      	  goto a;
+        }
+
+        
+    
+  }
+}
+}
+
+void menu (){
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("Afif Syam");
+  lcd.setCursor(0,1);
+  lcd.print("6702223011");
+  lcd.setCursor(15,0);
+  lcd.print(score);
+  Serial.print(score);
+}
+
+
+void control(){
+  	int push = digitalRead(but1);
+    int push1 = digitalRead(but2);
+	if (push == LOW){
+    	n = 0;
+  	}
+  	if (push1 == LOW){
+    	n = 1;
+  	}    
+}
+
+
+long microsecondsToInches(long microseconds)
+{
+ return microseconds / 74 / 2;
+}
+
+long microsecondsToCentimeters(long microseconds)
+{
+ return microseconds / 29 / 2;
+}
