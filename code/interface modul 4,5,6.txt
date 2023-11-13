@@ -1,0 +1,326 @@
+no.1
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
+LiquidCrystal_I2C lcd(32, 16, 2); // Alamat I2C LCD bisa berbeda tergantung pada modul LCD yang Anda gunakan
+
+const int proximityPin = A1;    // Pin yang terhubung ke sensor proximity
+const int buttonPin = 10;       // Pin yang terhubung ke tombol
+
+bool sensorActive = false;     // Status sensor proximity
+
+void setup() {
+  lcd.init();                      // Inisialisasi LCD
+  lcd.backlight();                 // Hidupkan backlight LCD
+  Serial.begin(9600);              // Inisialisasi komunikasi Serial Monitor
+  pinMode(proximityPin, INPUT);    // Atur pin sensor proximity sebagai input
+  pinMode(buttonPin, INPUT_PULLUP);// Atur pin tombol sebagai input dengan pull-up resistor
+}
+
+void loop() {
+  if (digitalRead(buttonPin) == LOW) {
+    // Tombol ditekan, aktifkan sensor proximity
+    sensorActive = true;
+  }
+
+  if (sensorActive) {
+    if (digitalRead(proximityPin) == HIGH) {
+      lcd.setCursor(0, 0);
+      lcd.print("Sensor Proximity:");
+      lcd.setCursor(0, 1);
+      lcd.print("tidak ada Objek Terdeteksi");
+      Serial.println("tidak ada Objek Terdeteksi pada Sensor Proximity");
+    } else {
+      lcd.setCursor(0, 0);
+      lcd.print("Sensor Proximity:");
+      lcd.setCursor(0, 1);
+      lcd.print("ada Objek");
+      Serial.println("Objek pada Sensor Proximity");
+    }
+  } else {
+    lcd.clear();
+    Serial.println("Tombol belum ditekan");
+  }
+}
+
+
+
+no.2
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
+LiquidCrystal_I2C lcd(32, 16, 2); // Alamat I2C LCD bisa berbeda tergantung pada modul LCD yang Anda gunakan
+const int buzzerPin = 9;            // Pin yang terhubung ke buzzer
+
+const int proximityPin = A1;         // Pin yang terhubung ke sensor proximity
+const int buttonPin = 10;            // Pin yang terhubung ke tombol
+
+bool sensorActive = false;          // Status sensor proximity
+bool buttonPressed = false;         // Status tombol ditekan
+
+void setup() {
+  lcd.init();                      // Inisialisasi LCD
+  lcd.backlight();                 // Hidupkan backlight LCD
+  Serial.begin(9600);              // Inisialisasi komunikasi Serial Monitor
+  pinMode(proximityPin, INPUT);    // Atur pin sensor proximity sebagai input
+  pinMode(buttonPin, INPUT_PULLUP);// Atur pin tombol sebagai input dengan pull-up resistor
+  pinMode(buzzerPin, OUTPUT);      // Atur pin buzzer sebagai output
+}
+
+void loop() {
+  int proximityValue = digitalRead(proximityPin);
+
+  if (digitalRead(buttonPin) == LOW && !buttonPressed) {
+    // Tombol ditekan, aktifkan sensor proximity
+    sensorActive = true;
+    buttonPressed = true;
+  } else if (digitalRead(buttonPin) == LOW && buttonPressed) {
+    // Tombol ditekan kedua kali, cek nilai sensor proximity
+    if (sensorActive && proximityValue == HIGH) {
+      lcd.setCursor(0, 0);
+      lcd.print("Sensor Proximity:");
+      lcd.setCursor(0, 1);
+      lcd.print("Objek Terdeteksi");
+      Serial.println("Objek Terdeteksi pada Sensor Proximity");
+      
+      // Aktifkan buzzer
+      digitalWrite(buzzerPin, HIGH);
+    } else {
+      lcd.clear();
+      digitalWrite(buzzerPin, LOW);
+    }
+  } else {
+    buttonPressed = false;
+  }
+
+  if (sensorActive) {
+    if (proximityValue == HIGH) {
+      lcd.setCursor(0, 0);
+      lcd.print("Sensor Proximity:");
+      lcd.setCursor(0, 1);
+      lcd.print("tidak terdeteksi");
+      Serial.println("tidak ada objek");
+    } else {
+      lcd.setCursor(0, 0);
+      lcd.print("Sensor Proximity:");
+      lcd.setCursor(0, 1);
+      lcd.print("ada objek");
+      Serial.println("objek terdeteksi");
+    }
+  } else {
+    lcd.clear();
+    digitalWrite(buzzerPin, LOW);
+    Serial.println("Tombol belum ditekan");
+  }
+}
+
+
+
+no.3
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
+LiquidCrystal_I2C lcd(0x27, 16, 2); // Alamat I2C LCD bisa berbeda tergantung pada modul LCD yang Anda gunakan
+const int buzzerPin = 9;            // Pin yang terhubung ke buzzer
+const int proximityPin = A1;         // Pin yang terhubung ke sensor proximity
+const int buttonPin = 10;            // Pin yang terhubung ke tombol
+const int led1Pin = 3;              // Pin yang terhubung ke LED 1
+const int led2Pin = 5;             // Pin yang terhubung ke LED 2
+const int led3Pin = 6;             // Pin yang terhubung ke LED 3
+
+int proximityValue;                 // Nilai sensor proximity
+bool buttonPressed = false;         // Status tombol ditekan
+bool sensorActive = false;          // Status sensor proximity aktif
+bool thresholdCrossed = false;      // Status melewati nilai batas
+bool buzzerOn = false;              // Status buzzer aktif
+int thresholdValue = 500;           // Nilai batas (sesuaikan sesuai kebutuhan)
+
+void setup() {
+  lcd.init();                      // Inisialisasi LCD
+  lcd.backlight();                 // Hidupkan backlight LCD
+  Serial.begin(9600);              // Inisialisasi komunikasi Serial Monitor
+  pinMode(proximityPin, INPUT);    // Atur pin sensor proximity sebagai input
+  pinMode(buttonPin, INPUT_PULLUP);// Atur pin tombol sebagai input dengan pull-up resistor
+  pinMode(buzzerPin, OUTPUT);      // Atur pin buzzer sebagai output
+  pinMode(led1Pin, OUTPUT);        // Atur pin LED 1 sebagai output
+  pinMode(led2Pin, OUTPUT);        // Atur pin LED 2 sebagai output
+  pinMode(led3Pin, OUTPUT);        // Atur pin LED 3 sebagai output
+}
+
+void loop() {
+  proximityValue = digitalRead(proximityPin);
+
+  if (digitalRead(buttonPin) == LOW) {
+    buttonPressed = true;
+    delay(200); // Debouncing
+  }
+
+  if (buttonPressed) {
+    if (proximityValue == HIGH) {
+      lcd.setCursor(0, 0);
+      lcd.print("Sensor Proximity:");
+      lcd.setCursor(0, 1);
+      lcd.print("Objek Terdeteksi");
+      Serial.println("Objek Terdeteksi pada Sensor Proximity");
+      digitalWrite(led1Pin, HIGH);
+      digitalWrite(led2Pin, HIGH);
+      digitalWrite(led3Pin, HIGH);
+
+      // Melewati nilai batas
+      if (!thresholdCrossed && analogRead(proximityPin) > thresholdValue) {
+        thresholdCrossed = true;
+        if (!buzzerOn) {
+          buzzerOn = true;
+          digitalWrite(buzzerPin, HIGH);
+          delay(1000); // Aktifkan buzzer selama 1 detik
+          digitalWrite(buzzerPin, LOW);
+          buzzerOn = false;
+        }
+      }
+    } else {
+      lcd.setCursor(0, 0);
+      lcd.print("Sensor Proximity:");
+      lcd.setCursor(0, 1);
+      lcd.print("Tidak ada Objek");
+      Serial.println("Tidak ada Objek pada Sensor Proximity");
+      digitalWrite(led1Pin, LOW);
+      digitalWrite(led2Pin, LOW);
+      digitalWrite(led3Pin, LOW);
+    }
+
+    // Reset sensor
+    if (digitalRead(buttonPin) == LOW) {
+      buttonPressed = false;
+      sensorActive = !sensorActive;
+      thresholdCrossed = false;
+    }
+  } else {
+    lcd.clear();
+    digitalWrite(led1Pin, LOW);
+    digitalWrite(led2Pin, LOW);
+    digitalWrite(led3Pin, LOW);
+    digitalWrite(buzzerPin, LOW);
+    Serial.println("Tombol belum ditekan");
+  }
+}
+
+
+
+no.4
+#include <LiquidCrystal_I2C.h> // Sertakan perpustakaan LiquidCrystal_I2C
+
+LiquidCrystal_I2C lcd(0x20, 16, 2);
+
+int ProxSensor = 8;
+int Buzzer = 9;
+int Button = 2;  // Nomor pin push button
+int LEDPin1 = 10; // Nomor pin LED 1
+int LEDPin2 = 5; // Nomor pin LED 2
+int LEDPin3 = 6;  // Nomor pin LED 3
+int inputVal = 0;
+boolean proxActive = false;  // Menyimpan status sensor proximity
+boolean alertActive = false; // Menyimpan status alert proximity
+int alertThreshold = 500;  // Nilai ambang batas untuk peringatan proximity
+boolean thirdButtonClick = false; // Menyimpan status ketika push button ditekan ketiga kali
+boolean fourthButtonClick = false; // Menyimpan status ketika push button ditekan keempat kali
+
+void setup() {
+  pinMode(Buzzer, OUTPUT);
+  pinMode(ProxSensor, INPUT);
+  pinMode(Button, INPUT_PULLUP);  // Gunakan resistor pull-up internal pada push button
+  pinMode(LEDPin1, OUTPUT); // Mengatur pin LED 1 sebagai OUTPUT
+  pinMode(LEDPin2, OUTPUT); // Mengatur pin LED 2 sebagai OUTPUT
+  pinMode(LEDPin3, OUTPUT); // Mengatur pin LED 3 sebagai OUTPUT
+  Serial.begin(9600);
+  lcd.init(); // Inisialisasi LCD
+  lcd.backlight(); // Nyalakan pencahayaan LCD
+  lcd.clear(); // Bersihkan tampilan LCD
+  lcd.print("Push button untuk");
+  lcd.setCursor(0, 1);
+  lcd.print("aktifkan sensor");
+}
+
+void loop() {
+  // Tunggu hingga push button ditekan pertama kali
+  while (digitalRead(Button) == HIGH) {
+    // Tidak melakukan apa-apa, hanya menunggu push button ditekan
+  }
+
+  // Push button telah ditekan pertama kali, aktifkan sensor proximity
+  proxActive = true;
+  lcd.clear(); // Bersihkan tampilan LCD
+  lcd.print("Sensor Aktif");
+
+  while (proxActive) {
+    if (digitalRead(ProxSensor) == LOW) {
+      Serial.println("Terdeteksi Halangan!");
+      tone(Buzzer, 123);
+      inputVal = analogRead(ProxSensor);
+      Serial.println(inputVal);
+      lcd.setCursor(0, 1);
+      lcd.print("Terdeteksi Halangan");
+      analogWrite(LEDPin1, map(inputVal, 0, 1023, 0, 255)); // Fading LED 1 sesuai dengan inputVal
+      analogWrite(LEDPin2, map(inputVal, 0, 1023, 0, 255)); // Fading LED 2 sesuai dengan inputVal
+      analogWrite(LEDPin3, map(inputVal, 0, 1023, 0, 255)); // Fading LED 3 sesuai dengan inputVal
+      delay(1000);
+
+      // Cek apakah nilai sensor proximity melewati batas tertentu
+      if (inputVal > alertThreshold) {
+        alertActive = true;
+        noTone(Buzzer); // Matikan buzzer
+      }
+    } else {
+      Serial.println("Clear!");
+      noTone(Buzzer); // Matikan buzzer
+      analogWrite(LEDPin1, 0); // Matikan LED 1
+      analogWrite(LEDPin2, 0); // Matikan LED 2
+      analogWrite(LEDPin3, 0); // Matikan LED 3
+      inputVal = analogRead(ProxSensor);
+      Serial.println(inputVal);
+      lcd.setCursor(0, 1);
+      lcd.print("Tidak ada halangan");
+      delay(1000);
+    }
+
+    // Tunggu hingga push button ditekan lagi untuk menonaktifkan sensor proximity
+    if (digitalRead(Button) == LOW) {
+      proxActive = false;
+      alertActive = false; // Matikan alert ketika sensor dinonaktifkan
+      noTone(Buzzer); // Matikan buzzer
+      analogWrite(LEDPin1, 0); // Matikan LED 1
+      analogWrite(LEDPin2, 0); // Matikan LED 2
+      analogWrite(LEDPin3, 0); // Matikan LED 3
+      lcd.clear(); // Bersihkan tampilan LCD
+      lcd.print("Push button untuk");
+      lcd.setCursor(0, 1);
+      lcd.print("aktifkan sensor");
+      delay(1000); // Tambahkan delay agar tidak terlalu cepat menonaktifkan sensor proximity
+      thirdButtonClick = false; // Reset status push button ketiga kali
+      fourthButtonClick = false; // Reset status push button keempat kali
+    }
+
+    // Peringatkan jika nilai sensor melewati batas tertentu
+    if (alertActive) {
+      Serial.println("Peringatan: Nilai Proximity Melewati Batas!");
+      tone(Buzzer, 500);
+    }
+
+    // Tunggu hingga push button ditekan ketiga kali
+    if (digitalRead(Button) == LOW && !thirdButtonClick) {
+      thirdButtonClick = true;
+      lcd.clear();
+      lcd.print("Nilai Proximity: ");
+      lcd.setCursor(0, 1);
+      lcd.print(inputVal);
+      Serial.print("Nilai Proximity: ");
+      Serial.println(inputVal);
+    }
+
+    // Tunggu hingga push button ditekan keempat kali
+    if (digitalRead(Button) == LOW && thirdButtonClick && !fourthButtonClick) {
+      fourthButtonClick = true;
+      // Kembali ke kasus 1
+      // Anda dapat menambahkan kode untuk kasus 1 di sini
+    }
+  }
+}
